@@ -37,36 +37,36 @@ def content_base(df_content, k=5):
 
     return recommendations
 
-# Main Function
-if __name__ == "__main__":
-    # Load data
-    bucket_name = "recommendation"
-    file_path = "merged_data_second.csv"
-    # Preprocess data và lấy phần dữ liệu mẫu
-    df, _ = preprocess_data(bucket_name=bucket_name, file_name=file_path, is_encoded=True)
-    print("Preprocess Complete !")
-
-    # Select features and Drop duplicate
-    selected_features = ["name", "product_id", "category_code", "brand", "price"]
-    df_content = df[selected_features].drop_duplicates(subset=['product_id'])
-    df_content = df_content.sort_values(by="product_id", ascending=False)
-    print("Drop duplicate and Feature Selection Complete !")
-
-    # Content Base
-    s_time = time.time()
-    k = 10  # Total recommended items
-    recommendations = content_base(df_content, k=k)
-    e_time = time.time()
-    print("Train Complete !")
-    print(f"Time consumed: {e_time - s_time}")
-
-    # Display result
-    for product_id, recs in list(recommendations.items())[:5]:
-        print(f"Product ID: {product_id} -> Recommended Products: {recs}")
-
-    if not os.path.exists("Model/"):
-        os.makedirs("Model/")
-
-    save_path = "Model/Test_content_base.pkl"
-    with open(save_path, 'wb') as f:
-        pickle.dump(recommendations, f)
+# # Main Function
+# if __name__ == "__main__":
+#     # Load data
+#     bucket_name = "recommendation"
+#     file_path = "merged_data_second.csv"
+#     # Preprocess data và lấy phần dữ liệu mẫu
+#     df, _ = preprocess_data(bucket_name=bucket_name, file_name=file_path, is_encoded=True)
+#     print("Preprocess Complete !")
+#
+#     # Select features and Drop duplicate
+#     selected_features = ["name", "product_id", "category_code", "brand", "price"]
+#     df_content = df[selected_features].drop_duplicates(subset=['product_id'])
+#     df_content = df_content.sort_values(by="product_id", ascending=False)
+#     print("Drop duplicate and Feature Selection Complete !")
+#
+#     # Content Base
+#     s_time = time.time()
+#     k = 10  # Total recommended items
+#     recommendations = content_base(df_content, k=k)
+#     e_time = time.time()
+#     print("Train Complete !")
+#     print(f"Time consumed: {e_time - s_time}")
+#
+#     # Display result
+#     for product_id, recs in list(recommendations.items())[:5]:
+#         print(f"Product ID: {product_id} -> Recommended Products: {recs}")
+#
+#     if not os.path.exists("Model/"):
+#         os.makedirs("Model/")
+#
+#     save_path = "Model/Test_content_base.pkl"
+#     with open(save_path, 'wb') as f:
+#         pickle.dump(recommendations, f)

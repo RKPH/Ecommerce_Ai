@@ -73,7 +73,7 @@ def get_user_rl_agent(all_product_ids, user_id, model_file):
 # 3) Main recommendation function
 # -----------------------------------------------------------
 def recommend_products(
-        model_file,
+        cf_model,  # Now pass cf_model directly, no need for model_file
         df,
         target_user_id,
         target_product_id,
@@ -91,10 +91,6 @@ def recommend_products(
 
     # Ensure df['event_time'] is datetime
     df["event_time"] = pd.to_datetime(df["event_time"])
-
-    # Load the CF model
-    with open(model_file, "rb") as f:
-        cf_model = pickle.load(f)
 
     # Check if the user exists in the CF model
     user_exists = check_user_in_model(cf_model, target_user_id)
@@ -156,8 +152,8 @@ def recommend_products(
 
         # 9) The remaining items, sorted by predicted_score
         remaining_items = predicted_scores_df[
-            ~predicted_scores_df["product_id"].isin(top_high_freq["product_id"])
-        ].sort_values(by="predicted_score", ascending=False)
+            ~predicted_scores_df["product_id"].isin(top_high_freq["product_id"])]
+        remaining_items = remaining_items.sort_values(by="predicted_score", ascending=False)
 
         # 10) Combine and take top_n
         recommendations = pd.concat([top_high_freq, remaining_items]).head(top_n)
