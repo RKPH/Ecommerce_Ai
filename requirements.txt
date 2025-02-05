@@ -1,0 +1,8 @@
+flask
+flask_cors
+pandas
+prometheus-flask-exporter
+scikit-learn
+numpy==1.24.4
+surprise
+tensorflow>=2.13.0
