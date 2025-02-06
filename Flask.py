@@ -14,7 +14,7 @@ from minio import Minio
 
 app = Flask(__name__)
 metrics = PrometheusMetrics(app, group_by='endpoint', default_latency_as_histogram=False)
-CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
+CORS(app, resources={r"/*": {"origins": "*"}})
 logging.basicConfig(level=logging.DEBUG)
 
 # =========================
