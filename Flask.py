@@ -29,6 +29,7 @@ BUCKET_NAME = 'models'             # Replace with your bucket name
 SESSION_MODEL_NAME = 'model.pkl'   # Path to the session model in your bucket
 CONTENT_MODEL_NAME = 'content_base.pkl'  # Path to the content-based model in your bucket
 
+
 # Initialize the MinIO client
 minio_client = Minio(
     MINIO_ENDPOINT,
